@@ -32,16 +32,15 @@ set incsearch
 set magic
 
 call plug#begin('~/.vim/plugged')
-Plug 'ayu-theme/ayu-vim'
+Plug 'lervag/vimtex'
+Plug 'morhetz/gruvbox'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdtree'
 Plug 'alvan/vim-closetag'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
-set termguicolors
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+colorscheme gruvbox
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.js, *.jsx'
 
