@@ -2,7 +2,9 @@
 ENABLE_CORRECTION="true"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting golang)
  
-export ZSH="/home/cxrlos/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+export KAFKA="$HOME/Documents/confluent-7.5.2"
+
 source $ZSH/oh-my-zsh.sh
 fpath+=$HOME/.zsh/pure
 
@@ -15,9 +17,10 @@ zstyle :prompt:pure:git:stash show yes
 prompt pure
  
 # Had a MacBook, self explanatory 
-alias open='xdg-open'
 alias vi='nvim'
 alias vim='nvim'
+alias python='python3'
+alias pip='pip3'
 
 # Vim syntax, cuz emacs syntax sux
 set -o vi

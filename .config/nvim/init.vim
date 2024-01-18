@@ -35,6 +35,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex'
 Plug 'morhetz/gruvbox'
 Plug 'mbbill/undotree'
+Plug 'github/copilot.vim'
 Plug 'preservim/nerdtree'
 Plug 'alvan/vim-closetag'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
