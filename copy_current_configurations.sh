@@ -1,3 +1,2 @@
-# This will copy the current configurations for NeoVim and the .zshrc file to the current directory
+# This will copy the current configurations for NeoVim 
 cp -r ~/.config/nvim/* ./nvim/.
-cp ~/.zshrc .
