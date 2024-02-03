@@ -31,3 +31,4 @@ neofetch
 # Disabled correction because I started using thefuck
 unsetopt correct_all
 eval $(thefuck --alias)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

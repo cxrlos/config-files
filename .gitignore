@@ -6,6 +6,7 @@
 
 ### VIM (cuz emacs sukz) ###
 # No need for swap because I have it disabled (I have undo-tree instead)
+nvim/plugin/*
 
 # Auto-generated tag files
 tags

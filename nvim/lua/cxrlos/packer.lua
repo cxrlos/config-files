@@ -1,20 +1,23 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd.packadd("packer.nvim")
 
+-- Run :lua ColorMyPencils()  at the start 
+vim.cmd("command! ColorMyPencils lua ColorMyPencils()")
+
 return require("packer").startup(function(use)
     -- Packer can manage itself
     use "wbthomason/packer.nvim"
 
     use {	-- Telescope: Fuzzy finder
-    "nvim-telescope/telescope.nvim", tag = "0.1.5",
-    requires = { {"nvim-lua/plenary.nvim"} }
-}
-use ({	-- Rose Pine: Color scheme
-"rose-pine/neovim",
-as = "rose-pine",
-config = function()
-    vim.cmd("colorscheme rose-pine")
-end
+        "nvim-telescope/telescope.nvim", tag = "0.1.5",
+        requires = { {"nvim-lua/plenary.nvim"} }
+    }
+    use ({	-- Color scheme
+        "folke/tokyonight.nvim",
+        as = "tokyonight",
+        config = function()
+            vim.cmd("colorscheme tokyonight")
+        end
     })
     use (	-- Treesitter: Syntax highlighting
     "nvim-treesitter/nvim-treesitter", 
