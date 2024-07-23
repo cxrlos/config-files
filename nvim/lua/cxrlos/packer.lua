@@ -3,6 +3,11 @@ vim.cmd.packadd("packer.nvim")
 
 -- Run :lua ColorMyPencils()  at the start 
 vim.cmd("command! ColorMyPencils lua ColorMyPencils()")
+vim.opt.runtimepath:append("~/Documents/todo-vimst")
+require('todo-vimst').setup({
+  log_level = "debug",  -- Set to debug for more verbose logging during testing
+  create_on_save = true,  -- Create a new todo file if it doesn't exist
+})
 
 return require("packer").startup(function(use)
     -- Packer can manage itself
@@ -13,10 +18,10 @@ return require("packer").startup(function(use)
         requires = { {"nvim-lua/plenary.nvim"} }
     }
     use ({	-- Color scheme
-        "folke/tokyonight.nvim",
-        as = "tokyonight",
+        "nordtheme/vim",
+        as = "nord",
         config = function()
-            vim.cmd("colorscheme tokyonight")
+            vim.cmd("colorscheme nord")
         end
     })
     use (	-- Treesitter: Syntax highlighting
@@ -58,12 +63,13 @@ return require("packer").startup(function(use)
         -- Snippets
         {'L3MON4D3/LuaSnip'},
         {'rafamadriz/friendly-snippets'},
-
-        use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }}),
-
         }
     }
     use {	-- GitHub Copilot: AI pair programming
         "github/copilot.vim", branch = "release"
+    }
+    use {   -- vim-markdown: Markdown syntax highlighting
+        "plasticboy/vim-markdown",
+        requires = { "godlygeek/tabular" }
     }
 end)

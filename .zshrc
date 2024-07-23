@@ -3,7 +3,6 @@ ENABLE_CORRECTION="true"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting golang)
  
 export ZSH="$HOME/.oh-my-zsh"
-export KAFKA="$HOME/Documents/confluent-7.5.2"
 
 source $ZSH/oh-my-zsh.sh
 fpath+=$HOME/.zsh/pure
@@ -21,6 +20,8 @@ alias vi='nvim'
 alias vim='nvim'
 alias python='python3'
 alias pip='pip3'
+alias whoops='fuck'
+alias typora="open -a typora"
 
 # Vim syntax, cuz emacs syntax sux
 set -o vi
