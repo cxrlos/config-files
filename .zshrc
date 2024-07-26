@@ -22,6 +22,13 @@ alias python='python3'
 alias pip='pip3'
 alias whoops='fuck'
 alias typora="open -a typora"
+# To create branch names
+gconb() {
+    local date=$(date +%Y-%m-%d)
+    local branch_name="clp/${date}/$1"
+    git checkout -b "$branch_name"
+}
+
 
 # Vim syntax, cuz emacs syntax sux
 set -o vi
@@ -33,3 +40,4 @@ neofetch
 unsetopt correct_all
 eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
