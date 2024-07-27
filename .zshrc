@@ -25,7 +25,7 @@ alias typora="open -a typora"
 # To create branch names
 gconb() {
     local date=$(date +%Y-%m-%d)
-    local branch_name="clp/${date}/$1"
+    local branch_name="$1/${date}/$2"
     git checkout -b "$branch_name"
 }
 
