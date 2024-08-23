@@ -40,4 +40,3 @@ neofetch
 unsetopt correct_all
 eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
