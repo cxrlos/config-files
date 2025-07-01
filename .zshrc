@@ -22,10 +22,23 @@ alias python='python3'
 alias pip='pip3'
 alias whoops='fuck'
 alias typora="open -a typora"
+alias gfmt="git add . && git commit -m \"Formatting\" && git push"
+
 # To create branch names
 gconb() {
-    local date=$(date +%Y-%m-%d)
-    local branch_name="$1/${date}/$2"
+    if [ $# -eq 0 ]; then
+        echo "Error: Please provide at least one component for the branch name." >&2
+        return 1
+    fi
+
+    local date
+    date=$(date +%Y-%m-%d)
+
+    local branch_parts
+    branch_parts=$(IFS=/; echo "$*")
+
+    local branch_name="${date}/${branch_parts}"
+
     git checkout -b "$branch_name"
 }
 
@@ -40,3 +53,4 @@ neofetch
 unsetopt correct_all
 eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
