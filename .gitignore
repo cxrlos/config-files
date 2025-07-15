@@ -1,6 +1,6 @@
 # OVERKILL GITIGNORE TEMPLATE
-# I made this file, so when I'm feeling too lazy to set up a custom gitignore 
-# file for a project II just copy this one. The original file can be found at 
+# I made this file, so when I'm feeling too lazy to set up a custom gitignore
+# file for a project II just copy this one. The original file can be found at
 # my repo https://github.com/cxrlos/Personal-Stuff
 
 
@@ -245,7 +245,7 @@ dist
 .pnp.*
 
 
-### Python ### 
+### Python ###
 __pycache__/
 *.py[cod]
 *$py.class
@@ -356,3 +356,5 @@ cython_debug/
 ### Setup Script State ###
 .config-setup-state
 
+# Alacritty
+alacritty.toml.backup
