@@ -1,0 +1,175 @@
+# ===================================================================
+#                        STARSHIP CONFIGURATION
+# ===================================================================
+# Starship prompt configuration with Nord color theme
+# Author: cxrlos
+# Features: Clean, fast, context-aware, Nord-themed
+# ===================================================================
+
+# ===================================================================
+# NORD COLOR PALETTE
+# ===================================================================
+
+# Nord color definitions (for reference)
+# nord_cyan = "#88C0D0"
+# nord_blue = "#81A1C1"
+# nord_green = "#A3BE8C"
+# nord_red = "#BF616A"
+# nord_orange = "#D08770"
+# nord_yellow = "#EBCB8B"
+# nord_purple = "#B48EAD"
+# nord_snow = "#ECEFF4"
+
+# ===================================================================
+# PROMPT FORMAT
+# ===================================================================
+
+# Main prompt format
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$git_metrics\
+$package\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+# ===================================================================
+# MODULE CONFIGURATIONS
+# ===================================================================
+
+# Username module
+[username]
+style_user = "bold #88C0D0"  # Nord cyan
+style_root = "bold #BF616A"  # Nord red
+format = "[$user]($style) "
+disabled = false
+show_always = false
+
+# Hostname module
+[hostname]
+ssh_only = true
+format = "on [$hostname](bold #81A1C1) "  # Nord blue
+disabled = false
+
+# Directory module
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold #88C0D0"  # Nord cyan
+read_only_style = "bold #BF616A"  # Nord red
+
+# Git module
+[git_branch]
+format = "on [$symbol$branch]($style) "
+style = "bold #A3BE8C"  # Nord green
+symbol = "󰘬 "  # Git branch icon
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "bold #BF616A"  # Nord red
+conflicted = "⚡"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = "✓"
+untracked = "?"
+stashed = "≡"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bold #88C0D0"  # Nord cyan
+
+[git_metrics]
+format = "([$added]($added_style) + [$deleted]($deleted_style))($style) "
+disabled = false
+added_style = "bold #A3BE8C"  # Nord green
+deleted_style = "bold #BF616A"  # Nord red
+
+# Package module
+[package]
+format = "is [$symbol$version]($style) "
+style = "bold #D08770"  # Nord orange
+symbol = "📦 "
+
+# Docker context module
+[docker_context]
+format = "on [$symbol$context]($style) "
+style = "bold #88C0D0"  # Nord cyan
+symbol = "🐳 "
+
+# ===================================================================
+# CLOUD MODULES (ONLY AT ROOT)
+# ===================================================================
+
+# AWS module
+[aws]
+format = 'on [$symbol($profile)(\($region\))(\[$duration\])]($style) '
+style = "bold #EBCB8B"  # Nord yellow
+symbol = "☁️  "
+disabled = true
+
+# Google Cloud module
+[gcloud]
+format = 'on [$symbol$project(@$domain)]($style) '
+style = "bold #88C0D0"  # Nord cyan
+symbol = "☁️  "
+disabled = true
+
+# Kubernetes module
+[kubernetes]
+format = 'on [$symbol$context( \($namespace\))]($style) '
+style = "bold #A3BE8C"  # Nord green
+symbol = "☸️  "
+disabled = true
+
+# Terraform module
+[terraform]
+format = 'on [$symbol$workspace]($style) '
+style = "bold #B48EAD"  # Nord purple
+symbol = ""
+disabled = true
+
+# Pulumi module
+[pulumi]
+format = 'on [$symbol$stack]($style) '
+style = "bold #B48EAD"  # Nord purple
+symbol = ""
+disabled = true
+
+# Helm module
+[helm]
+format = 'on [$symbol$version]($style) '
+style = "bold #ECEFF4"  # Nord snow storm
+symbol = "⎈ "
+disabled = true
+
+# ===================================================================
+# UTILITY MODULES
+# ===================================================================
+
+# Command duration
+[cmd_duration]
+format = "took [$duration](bold #EBCB8B) "  # Nord yellow
+min_time = 2_000
+show_milliseconds = false
+
+# Character module
+[character]
+success_symbol = "[➜](bold #A3BE8C)"  # Nord green
+error_symbol = "[✗](bold #BF616A)"    # Nord red
+vicmd_symbol = "[❮](bold #88C0D0)"    # Nord cyan
+
+
+
+ 

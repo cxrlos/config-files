@@ -1,0 +1,361 @@
+{
+  // ===================================================================
+  //                        CURSOR CONFIGURATION
+  // ===================================================================
+  // Author: cxrlos
+  // Features: Vi movements, Nord theme, Python/Scala optimized
+  // Font: Hack Nerd Font
+  // ===================================================================
+
+  // ===================================================================
+  // EDITOR APPEARANCE
+  // ===================================================================
+
+  // Font configuration
+  "editor.fontFamily": "Hack Nerd Font Mono",
+  "editor.fontSize": 12,
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "normal",
+  "editor.lineHeight": 1.4,
+
+  // Theme and colors
+  "workbench.colorTheme": "Nord",
+  "workbench.preferredDarkColorTheme": "Nord",
+  "workbench.preferredLightColorTheme": "Nord",
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Editor appearance
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "line",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorWidth": 2,
+
+  // ===================================================================
+  // VI MODE CONFIGURATION
+  // ===================================================================
+
+  // Enable Vim mode
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.ignorecase": true,
+  "vim.smartcase": true,
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useCtrlKeys": true,
+  "vim.handleKeys": {
+    "<C-d>": true,
+    "<C-u>": true,
+    "<C-f>": true,
+    "<C-b>": true,
+    "<C-e>": true,
+    "<C-y>": true
+  },
+
+  // Vim leader key
+  "vim.leader": "<space>",
+
+  // Vim keybindings
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "f"],
+      "after": ["<Cmd>Files<CR>"]
+    },
+    {
+      "before": ["<leader>", "g"],
+      "after": ["<Cmd>GFiles<CR>"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "after": ["<Cmd>Buffers<CR>"]
+    },
+    {
+      "before": ["<leader>", "w"],
+      "after": ["<Cmd>w<CR>"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "after": ["<Cmd>q<CR>"]
+    },
+    {
+      "before": ["<leader>", "s"],
+      "after": ["<Cmd>split<CR>"]
+    },
+    {
+      "before": ["<leader>", "v"],
+      "after": ["<Cmd>vsplit<CR>"]
+    }
+  ],
+
+  // ===================================================================
+  // PYTHON DEVELOPMENT
+  // ===================================================================
+
+  // Python interpreter
+  "python.defaultInterpreterPath": "python3",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+
+  // Python linting and formatting
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length=88"],
+  "python.sortImports.args": ["--profile=black"],
+
+  // Python testing
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+
+  // Python type checking
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.autoSearchPaths": true,
+
+  // ===================================================================
+  // SCALA DEVELOPMENT
+  // ===================================================================
+
+  // Scala Metals
+  "scala.metals.showInferredType": "on",
+  "scala.metals.showImplicitArguments": "on",
+  "scala.metals.showImplicitConversionsAndClasses": "on",
+  "scala.metals.enableSemanticHighlighting": true,
+  "scala.metals.enableIndentOnPaste": true,
+  "scala.metals.enableStripMarginOnPaste": true,
+  "scala.metals.enableMultilineStringFormatting": true,
+
+  // Scala formatting
+  "scala.formatOnSave": true,
+  "scala.scalafmt.onSave": true,
+
+  // ===================================================================
+  // GIT INTEGRATION
+  // ===================================================================
+
+  // Git configuration for CLI-focused workflow
+  "git.enabled": true,
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": false,
+  "git.showPushSuccessNotification": false,
+
+  // Git blame (your primary use case)
+  "git.blame.avatars": false,
+  "git.blame.compact": true,
+  "git.blame.ignoreWhitespace": true,
+  "git.blame.heatmap.enabled": true,
+
+  // Git history
+  "git.history.showEditor": true,
+  "git.history.maxItems": 1000,
+
+  // ===================================================================
+  // TERMINAL CONFIGURATION
+  // ===================================================================
+
+  // Terminal appearance
+  "terminal.integrated.fontFamily": "Hack Nerd Font Mono",
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.lineHeight": 1.2,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorStyle": "block",
+
+  // Terminal colors (Nord theme)
+  "terminal.integrated.colorScheme": "Nord",
+
+  // Terminal behavior
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.shellArgs.osx": ["-l"],
+  "terminal.integrated.shellArgs.linux": ["-l"],
+
+  // ===================================================================
+  // AI ASSISTANT CONFIGURATION
+  // ===================================================================
+
+  // Cursor AI settings
+  "cursor.chat.defaultModel": "claude-3.5-sonnet",
+  "cursor.chat.autoSave": true,
+  "cursor.chat.showInSidebar": true,
+  "cursor.chat.maxTokens": 4000,
+
+  // Code completion
+  "cursor.completion.enabled": true,
+  "cursor.completion.triggerMode": "automatic",
+  "cursor.completion.showCompletions": true,
+
+  // ===================================================================
+  // EDITOR BEHAVIOR
+  // ===================================================================
+
+  // File handling
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // Search and replace
+  "search.useGlobalIgnoreFiles": true,
+  "search.useIgnoreFiles": true,
+  "search.useParentIgnoreFiles": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.pytest_cache": true,
+    "**/.coverage": true,
+    "**/.mypy_cache": true,
+    "**/target": true,
+    "**/.bloop": true,
+    "**/.metals": true
+  },
+
+  // Explorer behavior
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.openEditors.visible": 0,
+  "explorer.autoReveal": true,
+
+  // ===================================================================
+  // LANGUAGE-SPECIFIC SETTINGS
+  // ===================================================================
+
+  // Python
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [88],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  // Scala
+  "[scala]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.rulers": [120]
+  },
+
+  // JavaScript/TypeScript
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // JSON
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // YAML
+  "[yaml]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // Markdown
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  // ===================================================================
+  // EXTENSIONS AND PLUGINS
+  // ===================================================================
+
+  // Recommended extensions
+  "extensions.ignoreRecommendations": false,
+  "extensions.autoUpdate": true,
+
+  // ===================================================================
+  // PERFORMANCE OPTIMIZATIONS
+  // ===================================================================
+
+  // Memory and performance
+  "files.watcherExclude": {
+    "**/target/**": true,
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/bower_components/**": true,
+    "**/.sass-cache/**": true,
+    "**/cover/**": true,
+    "**/.nyc_output/**": true,
+    "**/.grunt/**": true,
+    "**/bower_components/**": true,
+    "**/.metals/**": true,
+    "**/.bloop/**": true
+  },
+
+  // Editor performance
+  "editor.largeFileOptimizations": true,
+  "editor.maxTokenizationLineLength": 20000,
+  "editor.maxTokenizationLineLength": 20000,
+
+  // ===================================================================
+  // KEYBINDINGS (VI-FOCUSED)
+  // ===================================================================
+
+  // Custom keybindings for better vi experience
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+
+  // ===================================================================
+  // WORKSPACE SETTINGS
+  // ===================================================================
+
+  // Multi-root workspace
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.showTabs": "multiple",
+  "workbench.editor.tabSizing": "shrink",
+
+  // Sidebar
+  "workbench.sideBar.location": "left",
+  "workbench.activityBar.visible": true,
+
+  // Status bar
+  "workbench.statusBar.visible": true,
+  "workbench.statusBar.item.visibility": {
+    "git-status": "visible",
+    "problems": "visible",
+    "cursor-chat": "visible"
+  }
+}
