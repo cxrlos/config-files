@@ -1,47 +1,21 @@
 -- ===================================================================
---                        BASIC NVIM CONFIGURATION
+--                        MODERN NVIM CONFIGURATION
 -- ===================================================================
--- Minimal Neovim setup with essential features
+-- Clean, modular Neovim setup optimized for development
 -- Author: cxrlos
--- Features: Basic settings, keymaps, colorscheme
+-- Features: Excellent remaps, Cursor-compatible, modular design
 -- ===================================================================
 
 -- ===================================================================
--- BASIC SETTINGS
+-- MAIN ENTRY POINT
 -- ===================================================================
 
--- Set leader key
-vim.g.mapleader = " "
+-- Set up runtime path to include lua directory
+vim.opt.runtimepath:append(vim.fn.stdpath("config") .. "/lua")
 
--- Enable line numbers
-vim.wo.number = true
-vim.wo.relativenumber = true
-
--- Enable mouse
-vim.o.mouse = "a"
-
--- Enable syntax highlighting
-vim.cmd("syntax on")
-
--- Set colorscheme
-vim.cmd("colorscheme nord")
+-- Load core configuration
+require("core.init")
 
 -- ===================================================================
--- KEYMAPS
--- ===================================================================
-
--- Quick save
-vim.keymap.set("n", "<leader>w", ":w<CR>")
-
--- Quick quit
-vim.keymap.set("n", "<leader>q", ":q<CR>")
-
--- Split navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
-
--- ===================================================================
--- END OF BASIC CONFIG
+-- END OF CONFIGURATION
 -- ===================================================================
