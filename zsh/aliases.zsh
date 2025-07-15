@@ -11,9 +11,10 @@ alias edit='nvim'
 alias python='python3'
 alias pip='pip3'
 alias py='python3'
+alias venv='python3 -m venv .venv && source .venv/bin/activate'
 
 # Git aliases
-alias gss='git status'
+alias gss="git status --short"
 alias ga='git add'
 alias gaa='git add --all'
 alias gcm='git commit -m'
