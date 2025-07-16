@@ -39,6 +39,8 @@ alias gbs='gconb style'
 alias gbr='gconb refactor'
 alias gbt='gconb test'
 alias gbc='gconb chore'
+alias grhh='git reset HEAD --hard'
+alias gcl='git clone'
 
 # System aliases
 alias ll='ls -la'
