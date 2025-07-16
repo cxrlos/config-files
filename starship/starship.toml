@@ -32,13 +32,18 @@ $directory\
 $git_branch\
 $git_status\
 $git_state\
-$git_metrics\
 $python\
-$package\
-$docker_context\
 $cmd_duration\
+$jobs\
 $line_break\
 $character"""
+
+# -------------------------------------------------------------------
+# GLOBAL PERFORMANCE TUNING
+# -------------------------------------------------------------------
+# Reduce filesystem scan time and limit long-running external commands
+scan_timeout = 15      # ms to look for files before bailing out
+command_timeout = 1000 # ms allowed for git/other commands (warns when exceeded)
 
 # ===================================================================
 # MODULE CONFIGURATIONS
@@ -75,27 +80,21 @@ symbol = "󰘬 "  # Git branch icon
 [git_status]
 format = "([$all_status$ahead_behind]($style) )"
 style = "bold #BF616A"  # Nord red
-conflicted = "⚡"
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-up_to_date = "✓"
-untracked = "?"
-stashed = "≡"
-modified = "!"
-staged = "+"
-renamed = "»"
-deleted = "✘"
+# Refreshed, powerlevel-style glyphs for clarity
+conflicted = ""  # branch conflict icon
+ahead      = "⇡${count}"
+behind     = "⇣${count}"
+untracked  = "?"
+stashed    = ""
+modified   = "✚"
+staged     = "●"
+renamed    = "➜"
+deleted    = "✖"
+ignore_submodules = true
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "bold #88C0D0"  # Nord cyan
-
-[git_metrics]
-format = "([$added]($added_style) + [$deleted]($deleted_style))($style) "
-disabled = false
-added_style = "bold #A3BE8C"  # Nord green
-deleted_style = "bold #BF616A"  # Nord red
 
 # Python module (virtual environment)
 [python]
@@ -108,62 +107,15 @@ detect_folders = []
 python_binary = ["python", "python3", "python2"]
 version_format = "v${raw}"
 
-# Package module
-[package]
-format = "is [$symbol$version]($style) "
-style = "bold #D08770"  # Nord orange
-symbol = "📦 "
-
-# Docker context module
-[docker_context]
-format = "on [$symbol$context]($style) "
-style = "bold #88C0D0"  # Nord cyan
-symbol = "🐳 "
-
 # ===================================================================
 # CLOUD MODULES (ONLY AT ROOT)
 # ===================================================================
-
-# AWS module
-[aws]
-format = 'on [$symbol($profile)(\($region\))(\[$duration\])]($style) '
-style = "bold #EBCB8B"  # Nord yellow
-symbol = "☁️  "
-disabled = true
 
 # Google Cloud module
 [gcloud]
 format = 'on [$symbol$project(@$domain)]($style) '
 style = "bold #88C0D0"  # Nord cyan
 symbol = "☁️  "
-disabled = true
-
-# Kubernetes module
-[kubernetes]
-format = 'on [$symbol$context( \($namespace\))]($style) '
-style = "bold #A3BE8C"  # Nord green
-symbol = "☸️  "
-disabled = true
-
-# Terraform module
-[terraform]
-format = 'on [$symbol$workspace]($style) '
-style = "bold #B48EAD"  # Nord purple
-symbol = ""
-disabled = true
-
-# Pulumi module
-[pulumi]
-format = 'on [$symbol$stack]($style) '
-style = "bold #B48EAD"  # Nord purple
-symbol = ""
-disabled = true
-
-# Helm module
-[helm]
-format = 'on [$symbol$version]($style) '
-style = "bold #ECEFF4"  # Nord snow storm
-symbol = "⎈ "
 disabled = true
 
 # ===================================================================
@@ -176,12 +128,16 @@ format = "took [$duration](bold #EBCB8B) "  # Nord yellow
 min_time = 2_000
 show_milliseconds = false
 
+# -------------------------------------------------------------------
+# BACKGROUND/JOB INDICATOR (Suspended processes)
+# -------------------------------------------------------------------
+[jobs]
+symbol = "✦"
+style  = "bold #EBCB8B"
+format = "[$symbol]($style) "
+
 # Character module
 [character]
 success_symbol = "[➜](bold #A3BE8C)"  # Nord green
-error_symbol = "[✗](bold #BF616A)"    # Nord red
+error_symbol = "[!](bold #BF616A)"    # Nord red
 vicmd_symbol = "[❮](bold #88C0D0)"    # Nord cyan
-
-
-
- 

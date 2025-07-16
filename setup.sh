@@ -14,6 +14,7 @@ set -e
 STATE_FILE="$HOME/.config-setup-state"
 FORCE_INSTALL=false
 SKIP_PROMPTS=false
+REPLACE_CONFIGS=false
 
 # Colors for output
 RED='\033[0;31m'
@@ -75,12 +76,17 @@ while [[ $# -gt 0 ]]; do
             SKIP_PROMPTS=true
             shift
             ;;
+        --replace-configs)
+            REPLACE_CONFIGS=true
+            shift
+            ;;
         --help|-h)
             echo "Usage: $0 [OPTIONS]"
             echo ""
             echo "Options:"
             echo "  --force-install    Force package validation and updates"
             echo "  --skip-prompts     Skip all user prompts (auto-accept all)"
+            echo "  --replace-configs  Replace existing configs (prompt before deletion)"
             echo "  --help, -h         Show this help message"
             echo ""
             echo "The script will:"
@@ -370,6 +376,52 @@ setup_configs() {
         return
     fi
 
+    # -------------------------------------------------------------------
+    # OPTIONAL REPLACEMENT OF EXISTING CONFIGS
+    # -------------------------------------------------------------------
+    if [ "$REPLACE_CONFIGS" = true ]; then
+        EXISTING_PATHS=()
+
+        # Define potential destination paths
+        ALACRITTY_DEST="$HOME/.config/alacritty/alacritty.toml"
+        NEOFETCH_DEST="$HOME/.config/neofetch/config.conf"
+        ZSHRC_DEST="$HOME/.zshrc"
+        ZSH_DIR_DEST="$HOME/.zsh"
+        NVIM_DEST="$HOME/.config/nvim"
+        STARSHIP_DEST="$HOME/.config/starship.toml"
+        CURSOR_DEST="$HOME/Library/Application Support/Cursor/User/settings.json"
+
+        # Check existence and collect
+        [ -e "$ALACRITTY_DEST" ] && EXISTING_PATHS+=("$ALACRITTY_DEST")
+        [ -e "$NEOFETCH_DEST" ] && EXISTING_PATHS+=("$NEOFETCH_DEST")
+        [ -e "$ZSHRC_DEST" ] && EXISTING_PATHS+=("$ZSHRC_DEST")
+        [ -d "$ZSH_DIR_DEST" ] && EXISTING_PATHS+=("$ZSH_DIR_DEST")
+        [ -d "$NVIM_DEST" ] && EXISTING_PATHS+=("$NVIM_DEST")
+        [ -e "$STARSHIP_DEST" ] && EXISTING_PATHS+=("$STARSHIP_DEST")
+        [ -e "$CURSOR_DEST" ] && EXISTING_PATHS+=("$CURSOR_DEST")
+
+        if [ ${#EXISTING_PATHS[@]} -gt 0 ]; then
+            echo -e "${YELLOW}⚠️  The following existing config files/directories will be replaced:${NC}"
+            for p in "${EXISTING_PATHS[@]}"; do
+                echo -e "  ${RED}$p${NC}"
+            done
+
+            if ask_user "Do you want to delete these files/directories before proceeding?" "n"; then
+                for p in "${EXISTING_PATHS[@]}"; do
+                    rm -rf "$p"
+                    echo -e "  ${GREEN}Deleted $p${NC}"
+                done
+                echo -e "${GREEN}✅ Old configuration files removed.${NC}"
+            else
+                echo -e "${YELLOW}⚠️  Skipped deleting existing configs. They may cause copy conflicts.${NC}"
+            fi
+            echo ""
+        else
+            echo -e "${GREEN}✅ No existing configs found that need replacement${NC}"
+            echo ""
+        fi
+    fi
+
     echo -e "${CYAN}📁 Creating directories...${NC}"
     mkdir -p ~/.config/alacritty ~/.config/neofetch ~/.zsh 2>/dev/null || {
         echo -e "${YELLOW}⚠️  Warning: Could not create some directories (may already exist)${NC}"
@@ -549,36 +601,6 @@ install_neovim_plugins() {
     else
         echo -e "     ${RED}❌ Mason failed to load${NC}"
     fi
-
-    # Install LSP servers
-    echo -e "  ${PURPLE}📦 Installing LSP servers...${NC}"
-    if nvim --headless -c "MasonInstall pyright" -c "MasonInstall html" -c "MasonInstall tsserver" -c "MasonInstall jsonls" -c "MasonInstall lua_ls" -c "quit" 2>/dev/null; then
-        echo -e "     ${GREEN}✅ LSP servers installed${NC}"
-    else
-        echo -e "     ${YELLOW}⚠️  Some LSP servers may have failed to install${NC}"
-    fi
-
-    # Test LSP functionality
-    echo -e "  ${PURPLE}🔍 Testing LSP functionality...${NC}"
-    echo 'print("Hello, World!")' > /tmp/test_lsp.py
-    if nvim --headless -c "edit /tmp/test_lsp.py" -c "lua print('Python file opened')" -c "LspInfo" -c "quit" 2>/dev/null; then
-        echo -e "     ${GREEN}✅ LSP functionality working${NC}"
-    else
-        echo -e "     ${YELLOW}⚠️  LSP functionality may need manual setup${NC}"
-    fi
-    rm -f /tmp/test_lsp.py
-
-    # Final LSP verification
-    echo -e "  ${PURPLE}🔍 Final LSP verification...${NC}"
-    echo 'print("Hello, World!")
-def test_function():
-    return "test"' > /tmp/test_lsp_final.py
-    if nvim --headless -c "edit /tmp/test_lsp_final.py" -c "lua print('Testing LSP in Python file...')" -c "lua print('File opened successfully')" -c "quit" 2>/dev/null; then
-        echo -e "     ${GREEN}✅ LSP file handling working${NC}"
-    else
-        echo -e "     ${YELLOW}⚠️  LSP file handling may need manual setup${NC}"
-    fi
-    rm -f /tmp/test_lsp_final.py
 
     # Mark plugins as installed
     PLUGINS_INSTALLED=true
