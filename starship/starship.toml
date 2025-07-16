@@ -33,6 +33,7 @@ $git_branch\
 $git_status\
 $git_state\
 $git_metrics\
+$python\
 $package\
 $docker_context\
 $cmd_duration\
@@ -95,6 +96,17 @@ format = "([$added]($added_style) + [$deleted]($deleted_style))($style) "
 disabled = false
 added_style = "bold #A3BE8C"  # Nord green
 deleted_style = "bold #BF616A"  # Nord red
+
+# Python module (virtual environment)
+[python]
+format = 'via [$symbol$virtualenv]($style) '
+style = "bold #EBCB8B"  # Nord yellow
+symbol = "🐍 "
+detect_extensions = []
+detect_files = []
+detect_folders = []
+python_binary = ["python", "python3", "python2"]
+version_format = "v${raw}"
 
 # Package module
 [package]
