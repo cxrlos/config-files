@@ -138,6 +138,6 @@ format = "[$symbol]($style) "
 
 # Character module
 [character]
-success_symbol = "[➜](bold #A3BE8C)"  # Nord green
-error_symbol = "[!](bold #BF616A)"    # Nord red
+success_symbol = "[❯](bold #A3BE8C)"  # Nord green
+error_symbol = "[⤬](bold #BF616A)"    # Nord red
 vicmd_symbol = "[❮](bold #88C0D0)"    # Nord cyan
