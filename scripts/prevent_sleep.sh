@@ -29,9 +29,25 @@ is_ac_connected() {
     [ "$ac_status" -gt 0 ] && return 0 || return 1
 }
 
-# Function to check if lid is closed
+# Function to check if lid is closed (reliable on modern macOS)
+# Uses the AppleClamshellState property, which returns "Yes" (closed) or "No" (open).
+# Falls back to older detection methods if the property is not found.
 is_lid_closed() {
-    local lid_status=$(ioreg -n AppleClamshell | grep -i "AppleClamshell" | grep -i "closed" | wc -l)
+    # Query the AppleClamshellState value (works on most modern macOS versions)
+    local state=$(ioreg -r -k AppleClamshellState -d 1 | awk '/AppleClamshellState/ {print $3}')
+
+    # Normalize the value to lowercase for comparison
+    state=$(echo "$state" | tr '[:upper:]' '[:lower:]')
+
+    # If we got a valid answer, evaluate it
+    if [[ "$state" == "yes" || "$state" == "1" || "$state" == "true" ]]; then
+        return 0  # Lid is closed
+    elif [[ "$state" == "no" || "$state" == "0" || "$state" == "false" ]]; then
+        return 1  # Lid is open
+    fi
+
+    # Fallback for older macOS versions that expose a different node
+    local lid_status=$(ioreg -n AppleClamshell | grep -i "closed" | wc -l)
     [ "$lid_status" -gt 0 ] && return 0 || return 1
 }
 
