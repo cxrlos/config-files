@@ -56,3 +56,25 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     alias showfiles="defaults write com.apple.finder AppleShowAllFiles YES; killall Finder"
     alias hidefiles="defaults write com.apple.finder AppleShowAllFiles NO; killall Finder"
 fi
+
+# ===================================================================
+# Utility: Pretty-print all aliases
+# ===================================================================
+# `asliases` prints every defined alias in a color-highlighted, neatly
+# aligned table so it is easy to scan. It sorts aliases
+# alphabetically, strips the surrounding quotes, and highlights the
+# alias name in cyan.
+#
+# Example output:
+#   gco                 : git checkout
+#   ll                  : ls -la
+# -------------------------------------------------------------------
+aliases() {
+    alias | sort | while read -r line; do
+        name="${line%%=*}"
+        name="${name#alias }"
+        value="${line#*=}"
+        value="${value//\'/}"
+        printf '\033[1;36m%-20s\033[0m : %s\n' "$name" "$value"
+    done
+}
