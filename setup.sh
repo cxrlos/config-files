@@ -247,8 +247,9 @@ install_package() {
             echo -e "     ${GREEN}✅ $description already installed${NC}"
         fi
     elif [[ "$SYSTEM" == "arch" ]]; then
-        if ! pacman -Q "$package" &> /dev/null 2>&1; then
+        if ! pacman -Q "$package" &> /dev/null; then
             echo -e "     ${YELLOW}Installing $description...${NC}"
+            echo -e "     ${YELLOW}📝 You may be prompted for your password for sudo access${NC}"
             if sudo pacman -S --noconfirm "$package" &> /dev/null; then
                 echo -e "     ${GREEN}✅ $description installed successfully${NC}"
             else
@@ -269,8 +270,9 @@ install_aur_package() {
     show_progress $current $total
     echo -e "  ${CYAN}📦 Checking for $description (AUR)...${NC}"
 
-    if ! pacman -Q "$package" &> /dev/null 2>&1; then
+    if ! pacman -Q "$package" &> /dev/null; then
         echo -e "     ${YELLOW}Installing $description from AUR...${NC}"
+        echo -e "     ${YELLOW}📝 You may be prompted for your password for sudo access${NC}"
         if yay -S --noconfirm "$package" &> /dev/null; then
             echo -e "     ${GREEN}✅ $description installed successfully${NC}"
         else
@@ -317,35 +319,34 @@ install_packages() {
     local current_package=0
 
     # Core packages
-    ((current_package++))
     install_package "alacritty" "Alacritty terminal" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "neofetch" "Neofetch system info" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "starship" "Starship prompt" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "zsh" "ZSH shell" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "neovim" "Neovim editor" $current_package $total_packages
 
     # ZSH plugins
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "zsh-syntax-highlighting" "ZSH syntax highlighting" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "zsh-autosuggestions" "ZSH autosuggestions" $current_package $total_packages
 
     # Optional packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "fzf" "Fuzzy finder" $current_package $total_packages
-    ((current_package++))
+    current_package=$((current_package + 1))
     install_package "git" "Git version control" $current_package $total_packages
 
     # Font installation - Nerd Fonts for glyphs
     if [[ "$SYSTEM" == "macos" ]]; then
-        ((current_package++))
+        current_package=$((current_package + 1))
         install_package "font-hack-nerd-font" "Hack Nerd Font (with glyphs)" $current_package $total_packages
     elif [[ "$SYSTEM" == "arch" ]]; then
-        ((current_package++))
+        current_package=$((current_package + 1))
         install_aur_package "nerd-fonts-hack" "Hack Nerd Font (with glyphs)" $current_package $total_packages
     fi
 
@@ -389,7 +390,13 @@ setup_configs() {
         ZSH_DIR_DEST="$HOME/.zsh"
         NVIM_DEST="$HOME/.config/nvim"
         STARSHIP_DEST="$HOME/.config/starship.toml"
-        CURSOR_DEST="$HOME/Library/Application Support/Cursor/User/settings.json"
+
+        # OS-dependent Cursor path
+        if [[ "$SYSTEM" == "macos" ]]; then
+            CURSOR_DEST="$HOME/Library/Application Support/Cursor/User/settings.json"
+        elif [[ "$SYSTEM" == "arch" ]]; then
+            CURSOR_DEST="$HOME/.config/Cursor/User/settings.json"
+        fi
 
         # Check existence and collect
         [ -e "$ALACRITTY_DEST" ] && EXISTING_PATHS+=("$ALACRITTY_DEST")
@@ -431,7 +438,7 @@ setup_configs() {
     local current_config=0
 
     # Copy Alacritty config
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}🖥️  Setting up Alacritty...${NC}"
     if [ -f "$SCRIPT_DIR/alacritty/alacritty.toml" ]; then
@@ -445,7 +452,7 @@ setup_configs() {
     fi
 
     # Copy Neofetch config
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}🖼️  Setting up Neofetch...${NC}"
     if [ -f "$SCRIPT_DIR/neofetch/config.conf" ]; then
@@ -459,7 +466,7 @@ setup_configs() {
     fi
 
     # Copy ZSH configs
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}🐚 Setting up ZSH...${NC}"
     if [ -f "$SCRIPT_DIR/zsh/.zshrc" ]; then
@@ -479,7 +486,7 @@ setup_configs() {
             if [ -f "$file" ]; then
                 if cp "$file" ~/.zsh/ 2>/dev/null; then
                     echo -e "     ${GREEN}✅ Copied $(basename "$file")${NC}"
-                    ((copied_count++))
+                    copied_count=$((copied_count + 1))
                 else
                     echo -e "     ${YELLOW}⚠️  Warning: Could not copy $(basename "$file") (may already exist)${NC}"
                 fi
@@ -493,7 +500,7 @@ setup_configs() {
     fi
 
     # Copy Neovim config
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}📝 Setting up Neovim...${NC}"
     if [ -d "$SCRIPT_DIR/nvim" ]; then
@@ -507,7 +514,7 @@ setup_configs() {
     fi
 
     # Copy Starship config
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}⭐ Setting up Starship...${NC}"
     if [ -f "$SCRIPT_DIR/starship/starship.toml" ]; then
@@ -521,16 +528,27 @@ setup_configs() {
     fi
 
     # Copy Cursor config
-    ((current_config++))
+    current_config=$((current_config + 1))
     show_progress $current_config $total_configs
     echo -e "  ${PURPLE}🎯 Setting up Cursor...${NC}"
     if [ -f "$SCRIPT_DIR/cursor/settings.json" ]; then
-        # Create Cursor config directory
-        mkdir -p ~/Library/Application\ Support/Cursor/User 2>/dev/null || true
-        if cp "$SCRIPT_DIR/cursor/settings.json" ~/Library/Application\ Support/Cursor/User/ 2>/dev/null; then
-            echo -e "     ${GREEN}✅ Cursor config copied${NC}"
-        else
-            echo -e "     ${YELLOW}⚠️  Warning: Could not copy Cursor config (may already exist)${NC}"
+        # Create Cursor config directory based on OS
+        if [[ "$SYSTEM" == "macos" ]]; then
+            # macOS path
+            mkdir -p ~/Library/Application\ Support/Cursor/User 2>/dev/null || true
+            if cp "$SCRIPT_DIR/cursor/settings.json" ~/Library/Application\ Support/Cursor/User/ 2>/dev/null; then
+                echo -e "     ${GREEN}✅ Cursor config copied (macOS)${NC}"
+            else
+                echo -e "     ${YELLOW}⚠️  Warning: Could not copy Cursor config (may already exist)${NC}"
+            fi
+        elif [[ "$SYSTEM" == "arch" ]]; then
+            # Linux path
+            mkdir -p ~/.config/Cursor/User 2>/dev/null || true
+            if cp "$SCRIPT_DIR/cursor/settings.json" ~/.config/Cursor/User/ 2>/dev/null; then
+                echo -e "     ${GREEN}✅ Cursor config copied (Linux)${NC}"
+            else
+                echo -e "     ${YELLOW}⚠️  Warning: Could not copy Cursor config (may already exist)${NC}"
+            fi
         fi
     else
         echo -e "     ${YELLOW}⚠️  Warning: Cursor config not found${NC}"
@@ -539,6 +557,50 @@ setup_configs() {
     # Mark configs as copied
     CONFIGS_COPIED=true
     write_state
+    echo ""
+}
+
+# ===================================================================
+# SHELL CHANGE SECTION
+# ===================================================================
+
+change_default_shell() {
+    echo -e "${BLUE}🐚 Shell Configuration${NC}"
+    echo "================================"
+
+    # Check current shell
+    local current_shell=$(echo $SHELL)
+    local zsh_path=$(which zsh 2>/dev/null)
+
+    if [ -z "$zsh_path" ]; then
+        echo -e "${YELLOW}⚠️  ZSH not found. Skipping shell change.${NC}"
+        echo ""
+        return
+    fi
+
+    if [[ "$current_shell" == *"zsh"* ]]; then
+        echo -e "${GREEN}✅ ZSH is already your default shell${NC}"
+        echo ""
+        return
+    fi
+
+    if ! ask_user "Do you want to change your default shell to ZSH?" "y"; then
+        echo -e "${YELLOW}⏭️  Skipping shell change${NC}"
+        echo ""
+        return
+    fi
+
+    echo -e "${CYAN}🔄 Changing default shell to ZSH...${NC}"
+    echo -e "     ${YELLOW}📝 You'll be prompted for your password to change the default shell${NC}"
+    echo -e "     ${YELLOW}📝 This is required by the system to modify user shell settings${NC}"
+
+    if chsh -s "$zsh_path"; then
+        echo -e "     ${GREEN}✅ Default shell changed to ZSH successfully${NC}"
+        echo -e "     ${YELLOW}⚠️  You'll need to restart your terminal or log out/in for the change to take effect${NC}"
+    else
+        echo -e "     ${RED}❌ Failed to change default shell${NC}"
+        echo -e "     ${YELLOW}   You can manually change it later with: chsh -s $(which zsh)${NC}"
+    fi
     echo ""
 }
 
@@ -665,6 +727,9 @@ install_packages
 # Setup configurations
 setup_configs
 
+# Change default shell to ZSH
+change_default_shell
+
 # Install Neovim plugins
 install_neovim_plugins
 
@@ -675,7 +740,7 @@ final_status_check
 echo -e "${GREEN}🎉 Setup complete!${NC}"
 echo ""
 echo -e "${CYAN}📋 Next steps:${NC}"
-echo "1. Restart your terminal or run: source ~/.zshrc"
+echo "1. Restart your terminal or log out/in to use ZSH as your default shell"
 echo "2. If you're on macOS, you might need to set Hack as your terminal font"
 echo "3. Open Neovim to test LSP functionality"
 echo "4. Enjoy your new setup! 🚀"
