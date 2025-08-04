@@ -33,6 +33,11 @@ $git_branch\
 $git_status\
 $git_state\
 $python\
+$nodejs\
+$rust\
+$golang\
+$docker_context\
+$package\
 $cmd_duration\
 $jobs\
 $line_break\
@@ -67,15 +72,16 @@ disabled = false
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-format = "[$path]($style)[$read_only]($read_only_style) "
+format = "[ $path]($style)[$read_only]($read_only_style) "
 style = "bold #88C0D0"  # Nord cyan
+read_only = ""
 read_only_style = "bold #BF616A"  # Nord red
 
 # Git module
 [git_branch]
 format = "on [$symbol$branch]($style) "
 style = "bold #A3BE8C"  # Nord green
-symbol = "󰘬 "  # Git branch icon
+symbol = " "  # Git branch icon
 
 [git_status]
 format = "([$all_status$ahead_behind]($style) )"
@@ -100,7 +106,7 @@ style = "bold #88C0D0"  # Nord cyan
 [python]
 format = 'via [$symbol$virtualenv]($style) '
 style = "bold #EBCB8B"  # Nord yellow
-symbol = "🐍 "
+symbol = " "
 detect_extensions = []
 detect_files = []
 detect_folders = []
@@ -138,6 +144,53 @@ format = "[$symbol]($style) "
 
 # Character module
 [character]
-success_symbol = "[❯](bold #A3BE8C)"  # Nord green
-error_symbol = "[✗](bold #BF616A)"    # Nord red
-vicmd_symbol = "[❮](bold #88C0D0)"    # Nord cyan
+success_symbol = "[](bold #A3BE8C)"  # Nord green
+error_symbol = "[](bold #BF616A)"    # Nord red
+vicmd_symbol = "[](bold #88C0D0)"    # Nord cyan
+
+# ===================================================================
+# DEVELOPMENT ENVIRONMENT MODULES
+# ===================================================================
+
+# Node.js module
+[nodejs]
+format = "via [$symbol($version )]($style)"
+style = "bold #A3BE8C"  # Nord green
+symbol = "󰎙 "
+detect_extensions = ["js", "mjs", "cjs", "ts", "tsx", "jsx"]
+detect_files = ["package.json", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+# Rust module
+[rust]
+format = "via [$symbol($version )]($style)"
+style = "bold #D08770"  # Nord orange
+symbol = " "
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+
+# Go module
+[golang]
+format = "via [$symbol($version )]($style)"
+style = "bold #88C0D0"  # Nord cyan
+symbol = " "
+detect_extensions = ["go"]
+detect_files = ["go.mod", "go.sum", "glide.yaml", "Gopkg.yml", "Gopkg.lock", ".go-version"]
+detect_folders = ["Godeps"]
+
+# Docker module
+[docker_context]
+format = "via [$symbol$context]($style) "
+style = "bold #81A1C1"  # Nord blue
+symbol = " "
+only_with_files = true
+detect_extensions = []
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = []
+
+# Package module
+[package]
+format = "is [$symbol$version]($style) "
+style = "bold #EBCB8B"  # Nord yellow
+symbol = "󰏗 "
+display_private = false
