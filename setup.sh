@@ -222,6 +222,7 @@ detect_system() {
     echo ""
 }
 
+
 # ===================================================================
 # PACKAGE INSTALLATION FUNCTIONS
 # ===================================================================
@@ -261,27 +262,7 @@ install_package() {
     fi
 }
 
-install_aur_package() {
-    local package=$1
-    local description=$2
-    local current=$3
-    local total=$4
 
-    show_progress $current $total
-    echo -e "  ${CYAN}📦 Checking for $description (AUR)...${NC}"
-
-    if ! pacman -Q "$package" &> /dev/null; then
-        echo -e "     ${YELLOW}Installing $description from AUR...${NC}"
-        echo -e "     ${YELLOW}📝 You may be prompted for your password for sudo access${NC}"
-        if yay -S --noconfirm "$package" &> /dev/null; then
-            echo -e "     ${GREEN}✅ $description installed successfully${NC}"
-        else
-            echo -e "     ${YELLOW}⚠️  Failed to install $description from AUR (may already be installed or unavailable)${NC}"
-        fi
-    else
-        echo -e "     ${GREEN}✅ $description already installed${NC}"
-    fi
-}
 
 # ===================================================================
 # PACKAGE INSTALLATION SECTION
@@ -313,7 +294,7 @@ install_packages() {
     if [[ "$SYSTEM" == "macos" ]]; then
         total_packages=9  # Core packages + ZSH plugins + Optional + Font
     elif [[ "$SYSTEM" == "arch" ]]; then
-        total_packages=9  # Core packages + ZSH plugins + Optional + Font
+        total_packages=9  # Core packages + ZSH plugins + Optional + Font (same as macOS for shared tools)
     fi
 
     local current_package=0
@@ -341,13 +322,14 @@ install_packages() {
     current_package=$((current_package + 1))
     install_package "git" "Git version control" $current_package $total_packages
 
+
     # Font installation - Nerd Fonts for glyphs
     if [[ "$SYSTEM" == "macos" ]]; then
         current_package=$((current_package + 1))
         install_package "font-hack-nerd-font" "Hack Nerd Font (with glyphs)" $current_package $total_packages
     elif [[ "$SYSTEM" == "arch" ]]; then
         current_package=$((current_package + 1))
-        install_aur_package "nerd-fonts-hack" "Hack Nerd Font (with glyphs)" $current_package $total_packages
+        install_package "ttf-hack" "Hack font" $current_package $total_packages
     fi
 
     # Mark packages as installed
@@ -434,6 +416,7 @@ setup_configs() {
         echo -e "${YELLOW}⚠️  Warning: Could not create some directories (may already exist)${NC}"
     }
 
+    # Set total configs based on system
     local total_configs=6
     local current_config=0
 
@@ -476,7 +459,7 @@ setup_configs() {
             echo -e "     ${YELLOW}⚠️  Warning: Could not copy main zshrc (may already exist)${NC}"
         fi
     else
-        echo -e "     ${YELLOW}⚠️  Warning: Main zshrc not found${NC}"
+        echo -e "     ${YELLOW}⚠️  Warning: Main zshrc not found in zsh/ directory${NC}"
     fi
 
     # Copy modular ZSH configs
@@ -553,6 +536,7 @@ setup_configs() {
     else
         echo -e "     ${YELLOW}⚠️  Warning: Cursor config not found${NC}"
     fi
+
 
     # Mark configs as copied
     CONFIGS_COPIED=true
@@ -751,6 +735,7 @@ echo "   - ~/.zsh/ (modular zsh configs)"
 echo "   - ~/.config/alacritty/ (terminal config)"
 echo "   - ~/.config/neofetch/ (system info config)"
 echo "   - ~/.config/nvim/ (editor config)"
+echo "   - ~/.config/starship.toml (prompt config)"
 echo ""
 echo -e "${CYAN}📦 Installed packages:${NC}"
 echo "   - Alacritty (terminal)"

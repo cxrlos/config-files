@@ -61,16 +61,17 @@ multiplier = 3
 # ===================================================================
 [font]
 # Normal (roman) font face
-normal = { family = "Hack Nerd Font Mono", style = "Regular" }
+# Note: Alacritty will try system fallback if specified font is not available
+normal = { family = "Hack Nerd Font Mono, Hack Nerd Font, Hack, JetBrains Mono, monospace", style = "Regular" }
 
 # Bold font face
-bold = { family = "Hack Nerd Font Mono", style = "Bold" }
+bold = { family = "Hack Nerd Font Mono, Hack Nerd Font, Hack, JetBrains Mono, monospace", style = "Bold" }
 
 # Italic font face
-italic = { family = "Hack Nerd Font Mono", style = "Italic" }
+italic = { family = "Hack Nerd Font Mono, Hack Nerd Font, Hack, JetBrains Mono, monospace", style = "Italic" }
 
 # Bold italic font face
-bold_italic = { family = "Hack Nerd Font Mono", style = "Bold Italic" }
+bold_italic = { family = "Hack Nerd Font Mono, Hack Nerd Font, Hack, JetBrains Mono, monospace", style = "Bold Italic" }
 
 # Point size
 size = 12.0
